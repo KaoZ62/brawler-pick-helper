@@ -735,6 +735,111 @@
     "Win Rate":0.5300539844
   },
   {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"STU",
+    "Pick Rate":0.075572656,
+    "Win Rate":0.532755474
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"CARL",
+    "Pick Rate":0.073705011,
+    "Win Rate":0.549075163
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"CHESTER",
+    "Pick Rate":0.060420693,
+    "Win Rate":0.542942385
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"RICO",
+    "Pick Rate":0.04505596,
+    "Win Rate":0.504066463
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"BARLEY",
+    "Pick Rate":0.040282432,
+    "Win Rate":0.561989534
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"KENJI",
+    "Pick Rate":0.037863161,
+    "Win Rate":0.58720537
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"HANK",
+    "Pick Rate":0.035315835,
+    "Win Rate":0.587219681
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"JUJU",
+    "Pick Rate":0.032478905,
+    "Win Rate":0.559414048
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"OLLIE",
+    "Pick Rate":0.031007248,
+    "Win Rate":0.565347227
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"TARA",
+    "Pick Rate":0.03038667,
+    "Win Rate":0.515560166
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"DYNAMIKE",
+    "Pick Rate":0.029781852,
+    "Win Rate":0.532777668
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"SURGE",
+    "Pick Rate":0.029338582,
+    "Win Rate":0.485898469
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"BEA",
+    "Pick Rate":0.025861373,
+    "Win Rate":0.552372972
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"BUSTER",
+    "Pick Rate":0.022336881,
+    "Win Rate":0.505644735
+  },
+  {
+    "Mode":"Brawl Ball",
+    "Map":"Brawl_Ball_Triple_Dribble",
+    "Brawler":"MORTIS",
+    "Pick Rate":0.021168618,
+    "Win Rate":0.497766403
+  },
+  {
     "Mode":"Gem",
     "Map":"Gem_Grab_Double_Swoosh",
     "Brawler":"CARL",
@@ -1573,6 +1678,426 @@
     "Brawler":"BO",
     "Pick Rate":0.018529278,
     "Win Rate":0.5513211979
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"CHESTER",
+    "Pick Rate":0.0759768299,
+    "Win Rate":0.5658441918
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"BEA",
+    "Pick Rate":0.0654660348,
+    "Win Rate":0.5728764479
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"STU",
+    "Pick Rate":0.0560294892,
+    "Win Rate":0.542481203
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"BO",
+    "Pick Rate":0.0559241706,
+    "Win Rate":0.6139359699
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"GRAY",
+    "Pick Rate":0.0526171669,
+    "Win Rate":0.5676541233
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"CARL",
+    "Pick Rate":0.0499631385,
+    "Win Rate":0.5430016863
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"HANK",
+    "Pick Rate":0.0404002106,
+    "Win Rate":0.6710114703
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"BUSTER",
+    "Pick Rate":0.0392417062,
+    "Win Rate":0.5531400966
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"LOU",
+    "Pick Rate":0.033659821,
+    "Win Rate":0.5231539424
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"SQUEAK",
+    "Pick Rate":0.0326698262,
+    "Win Rate":0.5364281109
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"PENNY",
+    "Pick Rate":0.0275092154,
+    "Win Rate":0.5329249617
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"BARLEY",
+    "Pick Rate":0.0273828331,
+    "Win Rate":0.6169230769
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"KENJI",
+    "Pick Rate":0.0262243286,
+    "Win Rate":0.6257028112
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"MORTIS",
+    "Pick Rate":0.025824118,
+    "Win Rate":0.5783034258
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Dueling_Beetles",
+    "Brawler":"GRIFF",
+    "Pick Rate":0.025297525,
+    "Win Rate":0.5245628643
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"CHESTER",
+    "Pick Rate":0.0830937014,
+    "Win Rate":0.5563957959
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"STU",
+    "Pick Rate":0.0715700684,
+    "Win Rate":0.55625
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"BEA",
+    "Pick Rate":0.0624108037,
+    "Win Rate":0.5622866894
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"CARL",
+    "Pick Rate":0.0577459689,
+    "Win Rate":0.5389155293
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"BO",
+    "Pick Rate":0.0551685944,
+    "Win Rate":0.578957529
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"GRAY",
+    "Pick Rate":0.052974631,
+    "Win Rate":0.547446723
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"HANK",
+    "Pick Rate":0.0468826549,
+    "Win Rate":0.7019536574
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"BUSTER",
+    "Pick Rate":0.0390014271,
+    "Win Rate":0.5592572365
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"GRIFF",
+    "Pick Rate":0.0367009607,
+    "Win Rate":0.4939059779
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"LOU",
+    "Pick Rate":0.0282659169,
+    "Win Rate":0.5124340618
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"KENJI",
+    "Pick Rate":0.0245809104,
+    "Win Rate":0.6187175043
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"JUJU",
+    "Pick Rate":0.0228129593,
+    "Win Rate":0.6428571429
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"BARLEY",
+    "Pick Rate":0.0227490574,
+    "Win Rate":0.6376404494
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"MORTIS",
+    "Pick Rate":0.0222378427,
+    "Win Rate":0.5737547893
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Open_Business",
+    "Brawler":"SQUEAK",
+    "Pick Rate":0.02110891,
+    "Win Rate":0.4934409687
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"CHESTER",
+    "Pick Rate":0.087394818,
+    "Win Rate":0.5515967588
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"STU",
+    "Pick Rate":0.0704823794,
+    "Win Rate":0.5471335697
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"JUJU",
+    "Pick Rate":0.0625676914,
+    "Win Rate":0.6368175766
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"CARL",
+    "Pick Rate":0.0512996751,
+    "Win Rate":0.5454730004
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"HANK",
+    "Pick Rate":0.0486336749,
+    "Win Rate":0.6417558887
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"GRAY",
+    "Pick Rate":0.0403024244,
+    "Win Rate":0.5452196382
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"BARLEY",
+    "Pick Rate":0.0350329084,
+    "Win Rate":0.5160523187
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"MELODIE",
+    "Pick Rate":0.0322002833,
+    "Win Rate":0.5284605433
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"KENJI",
+    "Pick Rate":0.0319086895,
+    "Win Rate":0.6011749347
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"LILY",
+    "Pick Rate":0.0318462051,
+    "Win Rate":0.5810987574
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"R-T",
+    "Pick Rate":0.0281387986,
+    "Win Rate":0.577350111
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"LUMI",
+    "Pick Rate":0.026722486,
+    "Win Rate":0.5752143414
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"BUSTER",
+    "Pick Rate":0.025556111,
+    "Win Rate":0.5028524857
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"OLLIE",
+    "Pick Rate":0.0251812047,
+    "Win Rate":0.5252274607
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Parallel_Plays",
+    "Brawler":"BUZZ",
+    "Pick Rate":0.0239523452,
+    "Win Rate":0.5191304348
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"CHESTER",
+    "Pick Rate":0.0792944917,
+    "Win Rate":0.60647521
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"BO",
+    "Pick Rate":0.0723983845,
+    "Win Rate":0.6323442136
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"BEA",
+    "Pick Rate":0.0700352324,
+    "Win Rate":0.5595092025
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"CARL",
+    "Pick Rate":0.0527627395,
+    "Win Rate":0.5474348534
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"BELLE",
+    "Pick Rate":0.0457592163,
+    "Win Rate":0.5622065728
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"STU",
+    "Pick Rate":0.0426871187,
+    "Win Rate":0.5978862607
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"GUS",
+    "Pick Rate":0.0389490418,
+    "Win Rate":0.582460011
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"KENJI",
+    "Pick Rate":0.0337930738,
+    "Win Rate":0.6312778131
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"LOU",
+    "Pick Rate":0.0326974306,
+    "Win Rate":0.5157687254
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"PENNY",
+    "Pick Rate":0.0321818338,
+    "Win Rate":0.5220293725
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"BUSTER",
+    "Pick Rate":0.0320314514,
+    "Win Rate":0.5982562039
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"GRAY",
+    "Pick Rate":0.0308498754,
+    "Win Rate":0.5814763231
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"AMBER",
+    "Pick Rate":0.0307854258,
+    "Win Rate":0.5809490579
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"PIPER",
+    "Pick Rate":0.0288949042,
+    "Win Rate":0.4334572491
+  },
+  {
+    "Mode":"Hot Zone",
+    "Map":"Hot_Zone_Ring_Of_Fire",
+    "Brawler":"SQUEAK",
+    "Pick Rate":0.0244049154,
+    "Win Rate":0.4797535211
   },
   {
     "Mode":"Knockout",
