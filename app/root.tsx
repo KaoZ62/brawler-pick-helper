@@ -42,7 +42,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <header className="bg-gray-900 text-white p-4 flex gap-4">
+        <a href="/" className="hover:underline">
+          Accueil
+        </a>
+        <a href="/draft" className="hover:underline">
+          Draft
+        </a>
+      </header>
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
