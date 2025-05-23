@@ -1,15 +1,26 @@
-import { useState } from "react";
-import data from "../brawlers_by_map.json";
+import { useEffect, useState } from "react";
 import brawlerIcons from "../brawlerIcons.ts";
-import rawBrawlerTypes from "../brawlerTypes.json";
-
-const brawlerTypes: { [key: string]: string } = Object.fromEntries(
-  rawBrawlerTypes.map((entry) => [entry.Brawler, entry.Type])
-);
 
 export default function Home() {
+  const [data, setData] = useState<any[]>([]);
+  const [brawlerTypes, setBrawlerTypes] = useState<{ [key: string]: string }>({});
+  const [selectedMap, setSelectedMap] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      const mapRes = await fetch("/brawlers_by_map.json");
+      const mapJson = await mapRes.json();
+      const typeRes = await fetch("/brawlerTypes.json");
+      const typeJson = await typeRes.json();
+
+      setData(mapJson);
+      setBrawlerTypes(Object.fromEntries(typeJson.map((entry: any) => [entry.Brawler, entry.Type])));
+      setSelectedMap(mapJson[0]?.Map || "");
+    }
+    fetchData();
+  }, []);
+
   const maps = [...new Set(data.map((item) => item.Map))];
-  const [selectedMap, setSelectedMap] = useState(maps[0]);
 
   const modeColors: { [key: string]: string } = {
     bounty: "bg-teal-600",
