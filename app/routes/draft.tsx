@@ -10,6 +10,24 @@ export default function Draft() {
   const [teamB, setTeamB] = useState<string[]>([]);
   const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
 
+  const modeColors: { [key: string]: string } = {
+    bounty: "bg-teal-600",
+    brawl_ball: "bg-blue-500",
+    knockout: "bg-orange-800",
+    hot_zone: "bg-red-700",
+    heist: "bg-purple-600",
+    gem_grab: "bg-violet-600",
+  };
+
+  const modePrefixes = [
+    "gem_grab",
+    "brawl_ball",
+    "bounty",
+    "hot_zone",
+    "knockout",
+    "heist",
+  ];
+
   useEffect(() => {
     async function fetchData() {
       const mapRes = await fetch("/all_brawlers_by_map.json");
@@ -18,11 +36,21 @@ export default function Draft() {
       const typeJson = await typeRes.json();
 
       setMapData(mapJson);
-      setBrawlerTypes(Object.fromEntries(typeJson.map((entry: any) => [entry.Brawler, entry.Type])));
+      setBrawlerTypes(
+        Object.fromEntries(typeJson.map((entry: any) => [entry.Brawler, entry.Type]))
+      );
 
-      const uniqueMaps = [...new Set(mapJson.map((item: any) => item.Map))];
-      setMaps(uniqueMaps);
-      setSelectedMap(uniqueMaps[0]);
+      const rawMaps = [...new Set(mapJson.map((item: any) => item.Map))];
+
+const orderedMaps = modePrefixes.flatMap((prefix) =>
+  rawMaps.filter((map) =>
+    map.toLowerCase().startsWith(prefix)
+  )
+);
+
+setMaps(orderedMaps);
+
+      setSelectedMap(orderedMaps[0]);
     }
 
     fetchData();
@@ -70,21 +98,58 @@ export default function Draft() {
       <h1 className="text-2xl font-bold mb-4">Draft Simulator</h1>
 
       {/* MAP SELECTION */}
-      <div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
-        {maps.map((map) => (
-          <button
-            key={map}
-            onClick={() => setSelectedMap(map)}
-            className={`px-4 py-2 rounded ${
-              selectedMap === map ? "bg-blue-500" : "bg-gray-700"
-            }`}
-          >
-            {map}
-          </button>
-        ))}
+<div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
+  {maps.map((map) => {
+    const rawId = map.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
+    const mode =
+      modePrefixes.find((prefix) => rawId.startsWith(prefix)) || "default";
+    const mapId = rawId.replace(`${mode}_`, "");
+    const colorClass = modeColors[mode] || "bg-gray-700";
+
+    const readableMode = mode
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    const mapName = map
+      .replaceAll("_", " ")
+      .replace(readableMode, "")
+      .trim();
+
+    return (
+      <div
+        key={map}
+        onClick={() => setSelectedMap(map)}
+        className={`min-w-[160px] cursor-pointer rounded overflow-hidden border shadow-lg hover:shadow-xl ${
+          selectedMap === map ? "border-blue-500" : "border-gray-300"
+        }`}
+      >
+        <div
+          className={`${colorClass} text-white py-2 px-2 text-sm font-semibold flex items-center gap-2`}
+        >
+          <img
+            src={`/icons/${mode}.png`}
+            alt={readableMode}
+            className="w-5 h-5 object-contain"
+          />
+          <div className="flex flex-col leading-tight">
+            <span>{readableMode}</span>
+            <span className="text-xs font-normal">{mapName}</span>
+          </div>
+        </div>
+        <img
+          src={`/maps/${mapId}.png`}
+          alt={map}
+          className="w-full object-contain"
+          style={{ height: "auto", maxHeight: "200px" }}
+        />
+      </div>
+    );
+  })}
+
       </div>
 
-      {/* TEAM A & B */}
+      {/* TEAMS */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         {["A", "B"].map((team) => {
           const teamData = team === "A" ? teamA : teamB;
@@ -126,7 +191,7 @@ export default function Draft() {
         })}
       </div>
 
-      {/* TOP 15 */}
+      {/* TOP 15 PICKS */}
       <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
         {top15.map((brawler) => {
@@ -166,7 +231,7 @@ export default function Draft() {
         })}
       </div>
 
-      {/* ALL AVAILABLE BRAWLERS */}
+      {/* AVAILABLE BRAWLERS */}
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold">Available Brawlers</h2>
         <select
