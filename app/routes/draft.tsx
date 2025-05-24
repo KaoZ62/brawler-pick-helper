@@ -29,6 +29,14 @@ export default function Draft() {
     "knockout",
     "heist",
   ];
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const checkMobile = () => setIsMobile(window.innerWidth < 640);
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+  return () => window.removeEventListener("resize", checkMobile);
+}, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -149,13 +157,14 @@ export default function Draft() {
 
           return (
             <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width="100%"
-              height="72px"
-              typeIconSize="20px"
-            />
+  key={index}
+  brawler={brawler}
+  type={brawlerType}
+  width={isMobile ? "160px" : "270px"}
+  height={isMobile ? "50px" : "100px"}
+  typeIconSize={isMobile ? "20px" : "30px"}
+/>
+
           );
         })}
       </div>
@@ -194,13 +203,13 @@ export default function Draft() {
 
           return (
             <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width="100%"
-              height="72px"
-              typeIconSize="20px"
-            />
+  key={index}
+  brawler={brawler}
+  type={brawlerType}
+  width={isMobile ? "150px" : "270px"}
+  height={isMobile ? "60px" : "100px"}
+  typeIconSize={isMobile ? "15px" : "30px"}
+/>
           );
         })}
       </div>
