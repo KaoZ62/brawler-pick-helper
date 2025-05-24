@@ -153,9 +153,8 @@ export default function Draft() {
               brawler={brawler}
               type={brawlerType}
               width="100%"
-              height="auto"
-              typeIconSize="24px"
-              className="sm:w-[270px] sm:h-[100px] w-[180px] h-[80px]"
+              height="72px"
+              typeIconSize="20px"
             />
           );
         })}
@@ -199,9 +198,8 @@ export default function Draft() {
               brawler={brawler}
               type={brawlerType}
               width="100%"
-              height="auto"
-              typeIconSize="24px"
-              className="sm:w-[270px] sm:h-[100px] w-[180px] h-[80px]"
+              height="72px"
+              typeIconSize="20px"
             />
           );
         })}
