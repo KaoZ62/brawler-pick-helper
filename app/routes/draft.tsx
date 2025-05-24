@@ -200,6 +200,7 @@ export default function Draft() {
               width="270px"
               height="100px"
               typeIconSize="30px"
+              className="sm:w-[270px] sm:h-[100px] w-[220px] h-[90px]"
             />
           );
         })}
