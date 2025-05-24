@@ -117,13 +117,15 @@ export default function Home() {
 
           return (
             <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width="270px"
-              height="100px"
-              typeIconSize="30px"
-            />
+  key={index}
+  brawler={brawler}
+  type={brawlerType}
+  width="100%" // largeur 100% (gérée par Tailwind via className)
+  height="auto"
+  typeIconSize="30px"
+  className="sm:w-[270px] sm:h-[100px] w-[220px] h-[90px]"
+/>
+
           );
         })}
       </div>
