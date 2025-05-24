@@ -12,8 +12,7 @@ export default function Draft() {
   const [filterType, setFilterType] = useState<string>("all");
   const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
   const [isMobile, setIsMobile] = useState(false);
-  const [showRemoveA, setShowRemoveA] = useState<number | null>(null);
-  const [showRemoveB, setShowRemoveB] = useState<number | null>(null);
+  const [selectedForTeam, setSelectedForTeam] = useState<string | null>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
@@ -96,15 +95,16 @@ export default function Draft() {
       return b["Pick Rate"] - a["Pick Rate"];
     });
 
-  const toggleBrawler = (brawler: string, team: "A" | "B") => {
+  const addToTeam = (brawler: string, team: "A" | "B") => {
+    if (team === "A" && teamA.length < 3) setTeamA([...teamA, brawler]);
+    if (team === "B" && teamB.length < 3) setTeamB([...teamB, brawler]);
+    setSelectedForTeam(null);
+  };
+
+  const removeFromTeam = (brawler: string, team: "A" | "B") => {
     const setTeam = team === "A" ? setTeamA : setTeamB;
     const currentTeam = team === "A" ? teamA : teamB;
-
-    if (currentTeam.includes(brawler)) {
-      setTeam(currentTeam.filter((b) => b !== brawler));
-    } else if (currentTeam.length < 3) {
-      setTeam([...currentTeam, brawler]);
-    }
+    setTeam(currentTeam.filter((b) => b !== brawler));
   };
 
   const allTypes = [...new Set(Object.values(brawlerTypes).map(type => type.toLowerCase()))].sort();
@@ -149,24 +149,26 @@ export default function Draft() {
         })}
       </div>
 
-      {/* TEAM TITLES AND SELECTION */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      {/* TEAM TITLES + SLOTS */}
+      <div className="flex justify-between mb-6">
         {[
-          { team: "A", data: teamA, set: setTeamA, show: showRemoveA, setShow: setShowRemoveA },
-          { team: "B", data: teamB, set: setTeamB, show: showRemoveB, setShow: setShowRemoveB }
-        ].map(({ team, data, set, show, setShow }) => (
-          <div key={team}>
-            <h2 className="text-xl font-semibold mb-2">Équipe {team}</h2>
-            <div className="flex space-x-2">
+          { label: "Équipe A", team: teamA, teamKey: "A" },
+          { label: "Équipe B", team: teamB, teamKey: "B" },
+        ].map(({ label, team, teamKey }) => (
+          <div key={label} className="w-1/2 px-2">
+            <h2 className="text-xl font-semibold mb-2">{label}</h2>
+            <div className="flex gap-2">
               {[...Array(3)].map((_, i) => {
-                const brawlerName = data[i];
+                const brawlerName = team[i];
                 return (
                   <div
                     key={i}
-                    className="w-20 h-20 bg-gray-700 rounded relative group"
-                    onClick={() => isMobile && setShow(i)}
-                    onMouseEnter={() => !isMobile && setShow(i)}
-                    onMouseLeave={() => !isMobile && setShow(null)}
+                    className="w-20 h-20 bg-gray-800 rounded relative group"
+                    onClick={() => {
+                      if (isMobile && brawlerName) {
+                        removeFromTeam(brawlerName, teamKey as "A" | "B");
+                      }
+                    }}
                   >
                     {brawlerName && (
                       <>
@@ -175,17 +177,15 @@ export default function Draft() {
                           alt={brawlerName}
                           className="object-contain w-full h-full rounded"
                         />
-                        {show === i && (
-                          <button
-                            onClick={() => {
-                              const newTeam = data.filter((_, index) => index !== i);
-                              set(newTeam);
-                            }}
-                            className="absolute top-0 right-0 bg-black bg-opacity-60 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10"
-                          >
-                            ×
-                          </button>
-                        )}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFromTeam(brawlerName, teamKey as "A" | "B");
+                          }}
+                          className="absolute top-0 right-0 bg-black bg-opacity-60 text-white rounded-full w-5 h-5 text-xs hidden group-hover:flex items-center justify-center z-10"
+                        >
+                          ×
+                        </button>
                       </>
                     )}
                   </div>
@@ -205,15 +205,15 @@ export default function Draft() {
           const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width={isMobile ? "190px" : "270px"}
-              height={isMobile ? "105px" : "100px"}
-              typeIconSize={isMobile ? "20px" : "30px"}
-              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
-            />
+            <div key={index} onClick={() => setSelectedForTeam(brawler.Brawler)} className="cursor-pointer">
+              <BrawlerCard
+                brawler={brawler}
+                type={brawlerType}
+                width={isMobile ? "190px" : "270px"}
+                height={isMobile ? "105px" : "100px"}
+                typeIconSize={isMobile ? "20px" : "25px"}
+              />
+            </div>
           );
         })}
       </div>
@@ -251,18 +251,32 @@ export default function Draft() {
           const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width={isMobile ? "190px" : "270px"}
-              height={isMobile ? "105px" : "100px"}
-              typeIconSize={isMobile ? "20px" : "30px"}
-              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
-            />
+            <div key={index} onClick={() => setSelectedForTeam(brawler.Brawler)} className="cursor-pointer">
+              <BrawlerCard
+                brawler={brawler}
+                type={brawlerType}
+                width={isMobile ? "190px" : "270px"}
+                height={isMobile ? "105px" : "100px"}
+                typeIconSize={isMobile ? "20px" : "25px"}
+              />
+            </div>
           );
         })}
       </div>
+
+      {/* TEAM SELECT MODAL */}
+      {selectedForTeam && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white text-black p-6 rounded-lg space-y-4">
+            <h3 className="text-lg font-semibold">Ajouter {selectedForTeam} à :</h3>
+            <div className="flex justify-around">
+              <button onClick={() => addToTeam(selectedForTeam, "A")} className="bg-blue-500 text-white px-4 py-2 rounded">Équipe A</button>
+              <button onClick={() => addToTeam(selectedForTeam, "B")} className="bg-red-500 text-white px-4 py-2 rounded">Équipe B</button>
+            </div>
+            <button onClick={() => setSelectedForTeam(null)} className="mt-4 block text-center text-gray-600 underline">Annuler</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
