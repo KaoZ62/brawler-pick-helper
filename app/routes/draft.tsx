@@ -12,6 +12,8 @@ export default function Draft() {
   const [filterType, setFilterType] = useState<string>("all");
   const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
   const [isMobile, setIsMobile] = useState(false);
+  const [showRemoveA, setShowRemoveA] = useState<number | null>(null);
+  const [showRemoveB, setShowRemoveB] = useState<number | null>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
@@ -147,10 +149,51 @@ export default function Draft() {
         })}
       </div>
 
-      {/* TEAM TITLES */}
-      <div className="flex justify-between items-center px-2 mb-4">
-        <h2 className="text-xl font-semibold">Équipe A</h2>
-        <h2 className="text-xl font-semibold">Équipe B</h2>
+      {/* TEAM TITLES AND SELECTION */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        {[
+          { team: "A", data: teamA, set: setTeamA, show: showRemoveA, setShow: setShowRemoveA },
+          { team: "B", data: teamB, set: setTeamB, show: showRemoveB, setShow: setShowRemoveB }
+        ].map(({ team, data, set, show, setShow }) => (
+          <div key={team}>
+            <h2 className="text-xl font-semibold mb-2">Équipe {team}</h2>
+            <div className="flex space-x-2">
+              {[...Array(3)].map((_, i) => {
+                const brawlerName = data[i];
+                return (
+                  <div
+                    key={i}
+                    className="w-20 h-20 bg-gray-700 rounded relative group"
+                    onClick={() => isMobile && setShow(i)}
+                    onMouseEnter={() => !isMobile && setShow(i)}
+                    onMouseLeave={() => !isMobile && setShow(null)}
+                  >
+                    {brawlerName && (
+                      <>
+                        <img
+                          src={`/brawlers/${brawlerName.toLowerCase().replaceAll(" ", "").replace(".", "")}.png`}
+                          alt={brawlerName}
+                          className="object-contain w-full h-full rounded"
+                        />
+                        {show === i && (
+                          <button
+                            onClick={() => {
+                              const newTeam = data.filter((_, index) => index !== i);
+                              set(newTeam);
+                            }}
+                            className="absolute top-0 right-0 bg-black bg-opacity-60 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center z-10"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* TOP 15 PICKS */}
@@ -168,7 +211,8 @@ export default function Draft() {
               type={brawlerType}
               width={isMobile ? "190px" : "270px"}
               height={isMobile ? "105px" : "100px"}
-              typeIconSize={isMobile ? "20px" : "25px"}
+              typeIconSize={isMobile ? "20px" : "30px"}
+              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
             />
           );
         })}
@@ -213,7 +257,8 @@ export default function Draft() {
               type={brawlerType}
               width={isMobile ? "190px" : "270px"}
               height={isMobile ? "105px" : "100px"}
-              typeIconSize={isMobile ? "20px" : "25px"}
+              typeIconSize={isMobile ? "20px" : "30px"}
+              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
             />
           );
         })}
