@@ -9,27 +9,33 @@ type BrawlerCardProps = {
   type: string | null;
   width?: string;
   height?: string;
-  typeIconSize?: string; // 👈 ajoute cette ligne
+  typeIconSize?: string;
+  className?: string; // 👈 ajout
 };
 
-
-export default function BrawlerCard({ brawler, type, width = "200px", height = "auto", typeIconSize = "24px"}: BrawlerCardProps) {
+export default function BrawlerCard({
+  brawler,
+  type,
+  width = "200px",
+  height = "auto",
+  typeIconSize = "24px",
+  className = "" // 👈 ajout
+}: BrawlerCardProps) {
   const name = brawler.Brawler.trim().toLowerCase();
   const imgId = name.replaceAll(" ", "").replaceAll(".", "");
   const typeIcon = type ? brawlerIcons[type.toLowerCase()] : null;
 
   return (
     <div
-  className="bg-gray-800 rounded shadow p-4 text-gray-100 flex items-center gap-4 border border-gray-700"
-  style={{
-    width: width,
-    height: height,
-    minHeight: height,       // 👈 force la hauteur minimale
-    display: "flex",         // 👈 force le mode flex
-    alignItems: "center"     // 👈 centre verticalement
-  }}
->
-
+      className={`bg-gray-800 rounded shadow p-4 text-gray-100 flex items-center gap-4 border border-gray-700 ${className}`}
+      style={{
+        width,
+        height,
+        minHeight: height,
+        display: "flex",
+        alignItems: "center"
+      }}
+    >
       <div className="relative w-20 h-20 bg-yellow-300 rounded">
         <img
           src={`/brawlers/${imgId}.png`}
@@ -37,14 +43,14 @@ export default function BrawlerCard({ brawler, type, width = "200px", height = "
           className="w-full h-full object-contain"
         />
         {typeIcon && (
-  <img
-    src={typeIcon}
-    alt={type || ""}
-    title={type || ""}
-    style={{ width: typeIconSize, height: typeIconSize }}
-    className="absolute top-0 right-0 z-50"
-  />
-)}
+          <img
+            src={typeIcon}
+            alt={type || ""}
+            title={type || ""}
+            style={{ width: typeIconSize, height: typeIconSize }}
+            className="absolute top-0 right-0 z-50"
+          />
+        )}
       </div>
       <div>
         <h2 className="text-base font-semibold">{brawler.Brawler}</h2>
