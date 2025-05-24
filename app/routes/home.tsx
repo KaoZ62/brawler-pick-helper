@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import brawlerIcons from "../brawlerIcons.ts";
+import BrawlerCard from "./components/BrawlerCard";
 
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
@@ -20,7 +21,21 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const maps = [...new Set(data.map((item) => item.Map))];
+  const modePrefixes = [
+    "gem_grab",
+    "brawl_ball",
+    "bounty",
+    "hot_zone",
+    "knockout",
+    "heist",
+  ];
+
+  const rawMaps = [...new Set(data.map((item) => item.Map))];
+  const maps = modePrefixes.flatMap((prefix) =>
+    rawMaps.filter((map) =>
+      map.toLowerCase().startsWith(prefix)
+    )
+  );
 
   const modeColors: { [key: string]: string } = {
     bounty: "bg-teal-600",
@@ -42,22 +57,12 @@ export default function Home() {
       {/* MENU DÉFILANT DES MAPS */}
       <div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
         {maps.map((map) => {
-          const modePrefixes = [
-            "gem_grab",
-            "brawl_ball",
-            "bounty",
-            "hot_zone",
-            "knockout",
-            "heist",
-          ];
-
           const rawId = map
             .toLowerCase()
             .replaceAll(" ", "_")
             .replaceAll("'", "");
           const mode =
-            modePrefixes.find((prefix) => rawId.startsWith(prefix)) ||
-            "default";
+            modePrefixes.find((prefix) => rawId.startsWith(prefix)) || "default";
           const mapId = rawId.replace(`${mode}_`, "");
           const colorClass = modeColors[mode] || "bg-gray-700";
 
@@ -96,7 +101,7 @@ export default function Home() {
                 src={`/maps/${mapId}.png`}
                 alt={map}
                 className="w-full object-contain"
-                style={{ height: "auto", maxHeight: "200px" }}
+                style={{ height: "auto", maxHeight: "250px" }}
               />
             </div>
           );
@@ -104,50 +109,21 @@ export default function Home() {
       </div>
 
       {/* AFFICHAGE DES BRAWLERS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center">
         {filteredBrawlers.map((brawler, index) => {
-          const brawlerId = brawler.Brawler
-            .toLowerCase()
-            .replaceAll(" ", "")
-            .replace(".", "")
-            .replace("-", "");
           const name = brawler.Brawler.trim().toLowerCase();
           const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
-          const brawlerType = key ? brawlerTypes[key].toLowerCase() : null;
-          const typeIcon = brawlerIcons[brawlerType];
+          const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <div
+            <BrawlerCard
               key={index}
-              className="bg-black rounded shadow p-4 text-gray-100 flex items-center gap-4 border border-gray-700"
-            >
-              <div className="relative w-20 h-20 bg-yellow-300">
-                <img
-                  src={`/brawlers/${brawlerId}.png`}
-                  alt={brawler.Brawler}
-                  className="w-full h-full object-contain"
-                />
-                {typeIcon && (
-                  <img
-  src={typeIcon}
-  alt={brawlerType}
-  title={brawlerType}
-  className="absolute top-0 right-0 w-6 h-6 z-50"
-/>
-                )}
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">
-                  {brawler.Brawler}
-                </h2>
-                <p>
-                  Pick Rate: {(brawler["Pick Rate"] * 100).toFixed(2)}%
-                </p>
-                <p>
-                  Win Rate: {(brawler["Win Rate"] * 100).toFixed(2)}%
-                </p>
-              </div>
-            </div>
+              brawler={brawler}
+              type={brawlerType}
+              width="270px"
+              height="100px"
+              typeIconSize="30px"
+            />
           );
         })}
       </div>

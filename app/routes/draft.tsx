@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import brawlerIcons from "../brawlerIcons";
+import BrawlerCard from "./components/BrawlerCard";
 
 export default function Draft() {
   const [mapData, setMapData] = useState<any[]>([]);
@@ -41,15 +42,11 @@ export default function Draft() {
       );
 
       const rawMaps = [...new Set(mapJson.map((item: any) => item.Map))];
+      const orderedMaps = modePrefixes.flatMap((prefix) =>
+        rawMaps.filter((map) => map.toLowerCase().startsWith(prefix))
+      );
 
-const orderedMaps = modePrefixes.flatMap((prefix) =>
-  rawMaps.filter((map) =>
-    map.toLowerCase().startsWith(prefix)
-  )
-);
-
-setMaps(orderedMaps);
-
+      setMaps(orderedMaps);
       setSelectedMap(orderedMaps[0]);
     }
 
@@ -59,7 +56,6 @@ setMaps(orderedMaps);
   if (!selectedMap || mapData.length === 0) return <div className="text-white p-6">Loading...</div>;
 
   const filtered = mapData.filter((b) => b.Map === selectedMap);
-
   const brawlerMap = new Map<string, any>();
   filtered.forEach((b) => {
     const current = brawlerMap.get(b.Brawler);
@@ -98,55 +94,39 @@ setMaps(orderedMaps);
       <h1 className="text-2xl font-bold mb-4">Draft Simulator</h1>
 
       {/* MAP SELECTION */}
-<div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
-  {maps.map((map) => {
-    const rawId = map.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
-    const mode =
-      modePrefixes.find((prefix) => rawId.startsWith(prefix)) || "default";
-    const mapId = rawId.replace(`${mode}_`, "");
-    const colorClass = modeColors[mode] || "bg-gray-700";
+      <div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
+        {maps.map((map) => {
+          const rawId = map.toLowerCase().replaceAll(" ", "_").replaceAll("'", "");
+          const mode = modePrefixes.find((prefix) => rawId.startsWith(prefix)) || "default";
+          const mapId = rawId.replace(`${mode}_`, "");
+          const colorClass = modeColors[mode] || "bg-gray-700";
 
-    const readableMode = mode
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+          const readableMode = mode
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
 
-    const mapName = map
-      .replaceAll("_", " ")
-      .replace(readableMode, "")
-      .trim();
+          const mapName = map.replaceAll("_", " ").replace(readableMode, "").trim();
 
-    return (
-      <div
-        key={map}
-        onClick={() => setSelectedMap(map)}
-        className={`min-w-[160px] cursor-pointer rounded overflow-hidden border shadow-lg hover:shadow-xl ${
-          selectedMap === map ? "border-blue-500" : "border-gray-300"
-        }`}
-      >
-        <div
-          className={`${colorClass} text-white py-2 px-2 text-sm font-semibold flex items-center gap-2`}
-        >
-          <img
-            src={`/icons/${mode}.png`}
-            alt={readableMode}
-            className="w-5 h-5 object-contain"
-          />
-          <div className="flex flex-col leading-tight">
-            <span>{readableMode}</span>
-            <span className="text-xs font-normal">{mapName}</span>
-          </div>
-        </div>
-        <img
-          src={`/maps/${mapId}.png`}
-          alt={map}
-          className="w-full object-contain"
-          style={{ height: "auto", maxHeight: "200px" }}
-        />
-      </div>
-    );
-  })}
-
+          return (
+            <div
+              key={map}
+              onClick={() => setSelectedMap(map)}
+              className={`min-w-[160px] cursor-pointer rounded overflow-hidden border shadow-lg hover:shadow-xl ${
+                selectedMap === map ? "border-blue-500" : "border-gray-300"
+              }`}
+            >
+              <div className={`${colorClass} text-white py-2 px-2 text-sm font-semibold flex items-center gap-2`}>
+                <img src={`/icons/${mode}.png`} alt={readableMode} className="w-5 h-5 object-contain" />
+                <div className="flex flex-col leading-tight">
+                  <span>{readableMode}</span>
+                  <span className="text-xs font-normal">{mapName}</span>
+                </div>
+              </div>
+              <img src={`/maps/${mapId}.png`} alt={map} className="w-full object-contain" style={{ height: "auto", maxHeight: "25'px" }} />
+            </div>
+          );
+        })}
       </div>
 
       {/* TEAMS */}
@@ -160,10 +140,7 @@ setMaps(orderedMaps);
                 {[...Array(3)].map((_, i) => {
                   const brawlerName = teamData[i];
                   return (
-                    <div
-                      key={i}
-                      className="w-20 h-20 bg-gray-800 rounded relative group"
-                    >
+                    <div key={i} className="w-20 h-20 bg-gray-800 rounded relative group">
                       {brawlerName && (
                         <>
                           <img
@@ -194,39 +171,20 @@ setMaps(orderedMaps);
       {/* TOP 15 PICKS */}
       <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
-        {top15.map((brawler) => {
+        {top15.map((brawler, index) => {
           const name = brawler.Brawler.trim().toLowerCase();
-          const key = Object.keys(brawlerTypes).find((k) => k.toLowerCase() === name);
-          const type = key ? brawlerTypes[key].toLowerCase() : null;
-          const icon = type ? brawlerIcons[type] : null;
+          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
+          const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <div
-              key={brawler.Brawler}
-              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
-              className="cursor-pointer bg-gray-800 rounded p-3 flex items-center gap-3 text-white hover:bg-gray-700"
-            >
-              <div className="relative w-16 h-16">
-                <img
-                  src={`/brawlers/${name.replaceAll(" ", "").replaceAll(".", "")}.png`}
-                  alt={brawler.Brawler}
-                  className="w-full h-full object-contain"
-                />
-                {icon && (
-                  <img
-                    src={icon}
-                    alt={type}
-                    title={type}
-                    className="absolute top-0 right-0 w-6 h-6 z-50"
-                  />
-                )}
-              </div>
-              <div>
-                <div className="font-semibold">{brawler.Brawler}</div>
-                <div className="text-xs">Pick: {(brawler["Pick Rate"] * 100).toFixed(2)}%</div>
-                <div className="text-xs">Win: {(brawler["Win Rate"] * 100).toFixed(2)}%</div>
-              </div>
-            </div>
+            <BrawlerCard
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width="270px"
+              height="100px"
+              typeIconSize="30px"
+            />
           );
         })}
       </div>
@@ -240,43 +198,24 @@ setMaps(orderedMaps);
           className="bg-white text-black px-2 py-1 rounded text-sm"
         >
           <option value="pick">📈 Pick Rate</option>
-          <option value="alpha">🔤 Alphabetical</option>
+          <option value="alpha">🔠 Alphabetical</option>
         </select>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
-        {availableBrawlers.map((brawler) => {
+        {availableBrawlers.map((brawler, index) => {
           const name = brawler.Brawler.trim().toLowerCase();
-          const key = Object.keys(brawlerTypes).find((k) => k.toLowerCase() === name);
-          const type = key ? brawlerTypes[key].toLowerCase() : null;
-          const icon = type ? brawlerIcons[type] : null;
+          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
+          const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <div
-              key={brawler.Brawler}
-              onClick={() => toggleBrawler(brawler.Brawler, teamA.length < 3 ? "A" : "B")}
-              className="cursor-pointer bg-gray-800 rounded p-3 flex items-center gap-3 text-white hover:bg-gray-700"
-            >
-              <div className="relative w-16 h-16">
-                <img
-                  src={`/brawlers/${name.replaceAll(" ", "").replaceAll(".", "")}.png`}
-                  alt={brawler.Brawler}
-                  className="w-full h-full object-contain"
-                />
-                {icon && (
-                  <img
-                    src={icon}
-                    alt={type}
-                    title={type}
-                    className="absolute top-0 right-0 w-6 h-6 z-50"
-                  />
-                )}
-              </div>
-              <div>
-                <div className="font-semibold">{brawler.Brawler}</div>
-                <div className="text-xs">Pick: {(brawler["Pick Rate"] * 100).toFixed(2)}%</div>
-                <div className="text-xs">Win: {(brawler["Win Rate"] * 100).toFixed(2)}%</div>
-              </div>
-            </div>
+            <BrawlerCard
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width="270px"
+              height="100px"
+              typeIconSize="30px"
+            />
           );
         })}
       </div>
