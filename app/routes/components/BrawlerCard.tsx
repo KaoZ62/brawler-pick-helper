@@ -36,23 +36,23 @@ export default function BrawlerCard({
         alignItems: "center"
       }}
     >
-      <div className="relative w-24 h-24 rounded overflow-hidden bg-transparent">
+      <div className="relative w-20 h-20 bg-transparent rounded overflow-hidden">
+  <img
+    src={`/brawlers/${imgId}.png`}
+    alt={brawler.Brawler}
+    className="w-full h-full object-cover"
+  />
+  {typeIcon && (
+    <img
+      src={typeIcon}
+      alt={type || ""}
+      title={type || ""}
+      style={{ width: typeIconSize, height: typeIconSize }}
+      className="absolute top-0 right-0 z-50"
+    />
+  )}
+</div>
 
-        <img
-          src={`/brawlers/${imgId}.png`}
-          alt={brawler.Brawler}
-          className="w-full h-full object-contain"
-        />
-        {typeIcon && (
-          <img
-            src={typeIcon}
-            alt={type || ""}
-            title={type || ""}
-            style={{ width: typeIconSize, height: typeIconSize }}
-            className="absolute top-0 right-0 z-50"
-          />
-        )}
-      </div>
       <div className="flex flex-col justify-center">
   <h2 className="text-base font-semibold">{brawler.Brawler}</h2>
   <p className="text-sm flex justify-between">
