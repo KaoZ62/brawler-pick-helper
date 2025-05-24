@@ -9,6 +9,7 @@ export default function Draft() {
   const [selectedMap, setSelectedMap] = useState<string>("");
   const [teamA, setTeamA] = useState<string[]>([]);
   const [teamB, setTeamB] = useState<string[]>([]);
+  const [filterType, setFilterType] = useState<string>("all");
   const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
 
   const modeColors: { [key: string]: string } = {
@@ -71,6 +72,13 @@ export default function Draft() {
 
   const availableBrawlers = sortedByPickRate
     .filter((b) => !top15Names.has(b.Brawler))
+    .filter((b) => {
+      if (filterType === "all") return true;
+      const name = b.Brawler.trim().toLowerCase();
+      const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
+      const brawlerType = key ? brawlerTypes[key].toLowerCase() : "";
+      return brawlerType === filterType;
+    })
     .sort((a, b) => {
       if (sortMode === "alpha") {
         return a.Brawler.localeCompare(b.Brawler);
@@ -88,6 +96,8 @@ export default function Draft() {
       setTeam([...currentTeam, brawler]);
     }
   };
+
+  const allTypes = [...new Set(Object.values(brawlerTypes).map(type => type.toLowerCase()))].sort();
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -123,70 +133,26 @@ export default function Draft() {
                   <span className="text-xs font-normal">{mapName}</span>
                 </div>
               </div>
-              <img src={`/maps/${mapId}.png`} alt={map} className="w-full object-contain" style={{ height: "auto", maxHeight: "25'px" }} />
+              <img src={`/maps/${mapId}.png`} alt={map} className="w-full object-contain" style={{ height: "auto", maxHeight: "250px" }} />
             </div>
           );
         })}
       </div>
 
-      {/* TEAMS */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        {["A", "B"].map((team) => {
-          const teamData = team === "A" ? teamA : teamB;
-          return (
-            <div key={team}>
-              <h2 className="text-xl font-semibold mb-2">Team {team}</h2>
-              <div className="flex space-x-2">
-                {[...Array(3)].map((_, i) => {
-                  const brawlerName = teamData[i];
-                  return (
-                    <div key={i} className="w-20 h-20 bg-gray-800 rounded relative group">
-                      {brawlerName && (
-                        <>
-                          <img
-                            src={`/brawlers/${brawlerName.toLowerCase().replaceAll(" ", "").replace(".", "")}.png`}
-                            alt={brawlerName}
-                            className="object-contain w-full h-full rounded"
-                          />
-                          <button
-                            onClick={() => {
-                              const setTeam = team === "A" ? setTeamA : setTeamB;
-                              setTeam(teamData.filter((_, index) => index !== i));
-                            }}
-                            className="absolute top-0 right-0 bg-black bg-opacity-60 text-white rounded-full w-5 h-5 text-xs hidden group-hover:flex items-center justify-center z-10"
-                          >
-                            ×
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* TOP 15 PICKS */}
-      <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
-        {top15.map((brawler, index) => {
-          const name = brawler.Brawler.trim().toLowerCase();
-          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
-          const brawlerType = key ? brawlerTypes[key] : null;
-
-          return (
-            <BrawlerCard
-              key={index}
-              brawler={brawler}
-              type={brawlerType}
-              width="270px"
-              height="100px"
-              typeIconSize="30px"
-            />
-          );
-        })}
+      {/* AVAILABLE BRAWLERS HEADER */}
+      <div className="flex items-center justify-end mb-2">
+        <select
+          value={filterType}
+          onChange={(e) => setFilterType(e.target.value)}
+          className="bg-white text-black px-2 py-1 rounded text-sm"
+        >
+          <option value="all">🔁 All Types</option>
+          {allTypes.map((type) => (
+            <option key={type} value={type}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* AVAILABLE BRAWLERS */}
