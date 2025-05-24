@@ -161,7 +161,7 @@ useEffect(() => {
   brawler={brawler}
   type={brawlerType}
   width={isMobile ? "190px" : "270px"}
-  height={isMobile ? "115px" : "100px"}
+  height={isMobile ? "105px" : "100px"}
   typeIconSize={isMobile ? "20px" : "30px"}
 />
 
@@ -207,7 +207,7 @@ useEffect(() => {
   brawler={brawler}
   type={brawlerType}
   width={isMobile ? "190px" : "270px"}
-  height={isMobile ? "115px" : "100px"}
+  height={isMobile ? "105px" : "100px"}
   typeIconSize={isMobile ? "20px" : "30px"}
 />
           );
