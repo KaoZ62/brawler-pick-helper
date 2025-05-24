@@ -11,6 +11,14 @@ export default function Draft() {
   const [teamB, setTeamB] = useState<string[]>([]);
   const [filterType, setFilterType] = useState<string>("all");
   const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const modeColors: { [key: string]: string } = {
     bounty: "bg-teal-600",
@@ -29,14 +37,6 @@ export default function Draft() {
     "knockout",
     "heist",
   ];
-const [isMobile, setIsMobile] = useState(false);
-
-useEffect(() => {
-  const checkMobile = () => setIsMobile(window.innerWidth < 640);
-  checkMobile();
-  window.addEventListener("resize", checkMobile);
-  return () => window.removeEventListener("resize", checkMobile);
-}, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -147,6 +147,12 @@ useEffect(() => {
         })}
       </div>
 
+      {/* TEAM TITLES */}
+      <div className="flex justify-between items-center px-2 mb-4">
+        <h2 className="text-xl font-semibold">Équipe A</h2>
+        <h2 className="text-xl font-semibold">Équipe B</h2>
+      </div>
+
       {/* TOP 15 PICKS */}
       <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
@@ -157,14 +163,13 @@ useEffect(() => {
 
           return (
             <BrawlerCard
-  key={index}
-  brawler={brawler}
-  type={brawlerType}
-  width={isMobile ? "190px" : "270px"}
-  height={isMobile ? "105px" : "100px"}
-  typeIconSize={isMobile ? "20px" : "30px"}
-/>
-
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width={isMobile ? "190px" : "270px"}
+              height={isMobile ? "105px" : "100px"}
+              typeIconSize={isMobile ? "20px" : "25px"}
+            />
           );
         })}
       </div>
@@ -203,13 +208,13 @@ useEffect(() => {
 
           return (
             <BrawlerCard
-  key={index}
-  brawler={brawler}
-  type={brawlerType}
-  width={isMobile ? "190px" : "270px"}
-  height={isMobile ? "105px" : "100px"}
-  typeIconSize={isMobile ? "20px" : "30px"}
-/>
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width={isMobile ? "190px" : "270px"}
+              height={isMobile ? "105px" : "100px"}
+              typeIconSize={isMobile ? "20px" : "25px"}
+            />
           );
         })}
       </div>
