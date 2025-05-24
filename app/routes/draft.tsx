@@ -152,16 +152,17 @@ export default function Draft() {
               key={index}
               brawler={brawler}
               type={brawlerType}
-              width="270px"
-              height="100px"
-              typeIconSize="30px"
+              width="100%"
+              height="auto"
+              typeIconSize="24px"
+              className="sm:w-[270px] sm:h-[100px] w-[180px] h-[80px]"
             />
           );
         })}
       </div>
 
       {/* FILTER AND SORT DROPDOWNS */}
-      <div className="flex justify-end items-center gap-4 mb-2">
+      <div className="flex justify-end gap-2 mb-2">
         <select
           value={sortMode}
           onChange={(e) => setSortMode(e.target.value as "pick" | "alpha")}
@@ -197,10 +198,10 @@ export default function Draft() {
               key={index}
               brawler={brawler}
               type={brawlerType}
-              width="270px"
-              height="100px"
-              typeIconSize="30px"
-              className="sm:w-[270px] sm:h-[100px] w-[220px] h-[90px]"
+              width="100%"
+              height="auto"
+              typeIconSize="24px"
+              className="sm:w-[270px] sm:h-[100px] w-[180px] h-[80px]"
             />
           );
         })}

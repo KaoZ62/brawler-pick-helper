@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+""import { useEffect, useState } from "react";
 import brawlerIcons from "../brawlerIcons.ts";
 import BrawlerCard from "./components/BrawlerCard";
 
@@ -6,6 +6,11 @@ export default function Home() {
   const [data, setData] = useState<any[]>([]);
   const [brawlerTypes, setBrawlerTypes] = useState<{ [key: string]: string }>({});
   const [selectedMap, setSelectedMap] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 640);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -32,9 +37,7 @@ export default function Home() {
 
   const rawMaps = [...new Set(data.map((item) => item.Map))];
   const maps = modePrefixes.flatMap((prefix) =>
-    rawMaps.filter((map) =>
-      map.toLowerCase().startsWith(prefix)
-    )
+    rawMaps.filter((map) => map.toLowerCase().startsWith(prefix))
   );
 
   const modeColors: { [key: string]: string } = {
@@ -49,6 +52,10 @@ export default function Home() {
   const filteredBrawlers = data
     .filter((b) => b.Map === selectedMap)
     .sort((a, b) => b["Pick Rate"] - a["Pick Rate"]);
+
+  const cardWidth = isMobile ? "180px" : "270px";
+  const cardHeight = isMobile ? "80px" : "100px";
+  const iconSize = isMobile ? "24px" : "30px";
 
   return (
     <div className="min-h-screen bg-black p-6">
@@ -117,15 +124,13 @@ export default function Home() {
 
           return (
             <BrawlerCard
-  key={index}
-  brawler={brawler}
-  type={brawlerType}
-  width="100%" // largeur 100% (gérée par Tailwind via className)
-  height="auto"
-  typeIconSize="30px"
-  className="sm:w-[270px] sm:h-[100px] w-[220px] h-[90px]"
-/>
-
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width={cardWidth}
+              height={cardHeight}
+              typeIconSize={iconSize}
+            />
           );
         })}
       </div>
