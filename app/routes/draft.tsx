@@ -139,8 +139,38 @@ export default function Draft() {
         })}
       </div>
 
-      {/* AVAILABLE BRAWLERS HEADER */}
-      <div className="flex items-center justify-end mb-2">
+      {/* TOP 15 PICKS */}
+      <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
+        {top15.map((brawler, index) => {
+          const name = brawler.Brawler.trim().toLowerCase();
+          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
+          const brawlerType = key ? brawlerTypes[key] : null;
+
+          return (
+            <BrawlerCard
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width="270px"
+              height="100px"
+              typeIconSize="30px"
+            />
+          );
+        })}
+      </div>
+
+      {/* FILTER AND SORT DROPDOWNS */}
+      <div className="flex justify-end items-center gap-4 mb-2">
+        <select
+          value={sortMode}
+          onChange={(e) => setSortMode(e.target.value as "pick" | "alpha")}
+          className="bg-white text-black px-2 py-1 rounded text-sm"
+        >
+          <option value="pick">📈 Pick Rate</option>
+          <option value="alpha">🔤 Alphabetical</option>
+        </select>
+
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
@@ -155,18 +185,7 @@ export default function Draft() {
         </select>
       </div>
 
-      {/* AVAILABLE BRAWLERS */}
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-lg font-semibold">Available Brawlers</h2>
-        <select
-          value={sortMode}
-          onChange={(e) => setSortMode(e.target.value as "pick" | "alpha")}
-          className="bg-white text-black px-2 py-1 rounded text-sm"
-        >
-          <option value="pick">📈 Pick Rate</option>
-          <option value="alpha">🔠 Alphabetical</option>
-        </select>
-      </div>
+      {/* AVAILABLE BRAWLERS GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
         {availableBrawlers.map((brawler, index) => {
           const name = brawler.Brawler.trim().toLowerCase();
