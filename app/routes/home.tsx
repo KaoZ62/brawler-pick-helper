@@ -9,7 +9,10 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 640);
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -53,9 +56,9 @@ export default function Home() {
     .filter((b) => b.Map === selectedMap)
     .sort((a, b) => b["Pick Rate"] - a["Pick Rate"]);
 
-  const cardWidth = isMobile ? "180px" : "270px";
-  const cardHeight = isMobile ? "80px" : "100px";
-  const iconSize = isMobile ? "24px" : "30px";
+  const cardWidth = isMobile ? "190px" : "270px";
+  const cardHeight = isMobile ? "105px" : "100px";
+  const iconSize = isMobile ? "20px" : "30px";
 
   return (
     <div className="min-h-screen bg-black p-6">
