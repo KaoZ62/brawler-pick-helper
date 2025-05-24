@@ -55,12 +55,15 @@ export default function BrawlerCard({
       </div>
       <div className="flex flex-col justify-center">
   <h2 className="text-base font-semibold">{brawler.Brawler}</h2>
-  <p className="text-sm">
-    Pick Rate: <span className="float-right">{(brawler["Pick Rate"] * 100).toFixed(2)}%</span>
-  </p>
-  <p className="text-sm">
-    Win Rate: <span className="float-right">{(brawler["Win Rate"] * 100).toFixed(2)}%</span>
-  </p>
+  <p className="text-sm flex justify-between">
+  <span>Pick:</span>
+  <span>{(brawler["Pick Rate"] * 100).toFixed(2)}%</span>
+</p>
+<p className="text-sm flex justify-between">
+  <span>Win:</span>
+  <span>{(brawler["Win Rate"] * 100).toFixed(2)}%</span>
+</p>
+
 </div>
 
     </div>
