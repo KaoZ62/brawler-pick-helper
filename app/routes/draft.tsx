@@ -160,8 +160,8 @@ useEffect(() => {
   key={index}
   brawler={brawler}
   type={brawlerType}
-  width={isMobile ? "200px" : "270px"}
-  height={isMobile ? "80px" : "100px"}
+  width={isMobile ? "190px" : "270px"}
+  height={isMobile ? "120px" : "100px"}
   typeIconSize={isMobile ? "20px" : "30px"}
 />
 
@@ -207,8 +207,8 @@ useEffect(() => {
   brawler={brawler}
   type={brawlerType}
   width={isMobile ? "180px" : "270px"}
-  height={isMobile ? "100px" : "100px"}
-  typeIconSize={isMobile ? "15px" : "30px"}
+  height={isMobile ? "110px" : "100px"}
+  typeIconSize={isMobile ? "20px" : "30px"}
 />
           );
         })}
