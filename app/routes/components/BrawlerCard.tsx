@@ -36,7 +36,8 @@ export default function BrawlerCard({
         alignItems: "center"
       }}
     >
-      <div className="relative w-20 h-20 bg-yellow-300 rounded">
+      <div className="relative w-20 h-20 rounded overflow-hidden bg-transparent">
+
         <img
           src={`/brawlers/${imgId}.png`}
           alt={brawler.Brawler}
@@ -52,11 +53,16 @@ export default function BrawlerCard({
           />
         )}
       </div>
-      <div>
-        <h2 className="text-base font-semibold">{brawler.Brawler}</h2>
-        <p className="text-sm">Pick: {(brawler["Pick Rate"] * 100).toFixed(2)}%</p>
-        <p className="text-sm">Win: {(brawler["Win Rate"] * 100).toFixed(2)}%</p>
-      </div>
+      <div className="flex flex-col justify-center">
+  <h2 className="text-base font-semibold">{brawler.Brawler}</h2>
+  <p className="text-sm">
+    Pick Rate: <span className="float-right">{(brawler["Pick Rate"] * 100).toFixed(2)}%</span>
+  </p>
+  <p className="text-sm">
+    Win Rate: <span className="float-right">{(brawler["Win Rate"] * 100).toFixed(2)}%</span>
+  </p>
+</div>
+
     </div>
   );
 }
