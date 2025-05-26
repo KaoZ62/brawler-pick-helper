@@ -154,20 +154,6 @@ const availableBrawlers = sortedByPickRate
   })}
 </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
-        {availableBrawlers.map((brawler, index) => {
-          const name = brawler.Brawler.trim().toLowerCase();
-          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
-          const brawlerType = key ? brawlerTypes[key] : null;
-
-          return (
-            <div key={index} onClick={() => setSelectedForTeam(brawler.Brawler)} className="cursor-pointer">
-              <BrawlerCard brawler={brawler} type={brawlerType} width={cardWidth} height={cardHeight} typeIconSize={iconSize} />
-            </div>
-          );
-        })}
-      </div>
-
       {selectedForTeam && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-white text-black p-6 rounded-lg space-y-4">
