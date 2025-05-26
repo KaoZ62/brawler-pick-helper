@@ -1,128 +1,97 @@
-import { useEffect, useState } from "react";
-import brawlerIcons from "../brawlerIcons.ts";
+import React, { useState } from "react";
+
+import { useBrawlerData } from "./hooks/useBrawlerData";
+import { useMapData } from "./hooks/useMapData";
+import { useIsMobile } from "./hooks/useIsMobile";
+
 import BrawlerCard from "./components/BrawlerCard";
+import { SortAndFilterControls } from "./components/SortAndFilterControls";
+import { MapSelector } from "./components/MapSelector";
+
+import { sortAndFilterBrawlers } from "./utils/sortAndFilterBrawlers";
+
 
 export default function Home() {
-  const [data, setData] = useState<any[]>([]);
-  const [brawlerTypes, setBrawlerTypes] = useState<{ [key: string]: string }>({});
-  const [selectedMap, setSelectedMap] = useState("");
-  const [isMobile, setIsMobile] = useState(false);
+  const { allBrawlers, brawlerTypes, isLoading } = useBrawlerData();
+  const { maps, selectedMap, setSelectedMap } = useMapData(allBrawlers);
+  const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const [filterType, setFilterType] = useState("all");
+  const [sortMode, setSortMode] = useState<"pick" | "alpha">("pick");
 
-  useEffect(() => {
-    async function fetchData() {
-      const mapRes = await fetch("/brawlers_by_map.json");
-      const mapJson = await mapRes.json();
-      const typeRes = await fetch("/brawlerTypes.json");
-      const typeJson = await typeRes.json();
+  if (isLoading || allBrawlers.length === 0 || !selectedMap) {
+    return <div className="text-white p-6">Loading...</div>;
+  }
 
-      setData(mapJson);
-      setBrawlerTypes(Object.fromEntries(typeJson.map((entry: any) => [entry.Brawler, entry.Type])));
-      setSelectedMap(mapJson[0]?.Map || "");
-    }
-    fetchData();
-  }, []);
+  const filtered = allBrawlers.filter((b) => b.Map === selectedMap);
+  const sortedByPickRate = [...filtered].sort((a, b) => b["Pick Rate"] - a["Pick Rate"]);
+  const top15 = sortedByPickRate.slice(0, 15);
+  const top15Names = new Set(top15.map((b) => b.Brawler));
 
-  const modePrefixes = [
-    "gem_grab",
-    "brawl_ball",
-    "bounty",
-    "hot_zone",
-    "knockout",
-    "heist",
-  ];
-
-  const rawMaps = [...new Set(data.map((item) => item.Map))];
-  const maps = modePrefixes.flatMap((prefix) =>
-    rawMaps.filter((map) => map.toLowerCase().startsWith(prefix))
-  );
-
-  const modeColors: { [key: string]: string } = {
-    bounty: "bg-teal-600",
-    brawl_ball: "bg-blue-500",
-    knockout: "bg-orange-800",
-    hot_zone: "bg-red-700",
-    heist: "bg-purple-600",
-    gem_grab: "bg-violet-600",
-  };
-
-  const filteredBrawlers = data
-    .filter((b) => b.Map === selectedMap)
-    .sort((a, b) => b["Pick Rate"] - a["Pick Rate"]);
+  const availableBrawlers = sortedByPickRate
+    .filter((b) => !top15Names.has(b.Brawler))
+    .filter((b) => {
+      if (filterType === "all") return true;
+      const name = b.Brawler.trim().toLowerCase();
+      const key = Object.keys(brawlerTypes).find((k) => k.toLowerCase() === name);
+      const brawlerType = key ? brawlerTypes[key].toLowerCase() : "";
+      return brawlerType === filterType;
+    })
+    .sort((a, b) => {
+      if (sortMode === "alpha") {
+        return a.Brawler.localeCompare(b.Brawler);
+      }
+      return b["Pick Rate"] - a["Pick Rate"];
+    });
 
   const cardWidth = isMobile ? "190px" : "270px";
   const cardHeight = isMobile ? "105px" : "100px";
   const iconSize = isMobile ? "20px" : "30px";
 
+  const allTypes = [...new Set(Object.values(brawlerTypes).map((t) => t.toLowerCase()))].sort();
+
   return (
-    <div className="min-h-screen bg-black p-6">
-      <h1 className="text-2xl font-bold mb-4 text-white">Top Brawlers by Map</h1>
+    <div className="min-h-screen bg-black text-white p-6">
+      <h1 className="text-2xl font-bold mb-4">Top Brawlers by Map</h1>
 
-      {/* MENU DÉFILANT DES MAPS */}
-      <div className="flex overflow-x-auto space-x-4 mb-6 pb-2">
-        {maps.map((map) => {
-          const rawId = map
-            .toLowerCase()
-            .replaceAll(" ", "_")
-            .replaceAll("'", "");
-          const mode =
-            modePrefixes.find((prefix) => rawId.startsWith(prefix)) || "default";
-          const mapId = rawId.replace(`${mode}_`, "");
-          const colorClass = modeColors[mode] || "bg-gray-700";
+      {/* Map Selector */}
+      <MapSelector maps={maps} selectedMap={selectedMap} setSelectedMap={setSelectedMap} />
 
-          const readableMode = mode
-            .split("_")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
-
-          const mapName = map
-            .replaceAll("_", " ")
-            .replace(readableMode, "")
-            .trim();
+      {/* Top 15 Picks */}
+      <h2 className="text-lg font-semibold mb-2">Top 15 Picks</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
+        {top15.map((brawler, index) => {
+          const name = brawler.Brawler.trim().toLowerCase();
+          const key = Object.keys(brawlerTypes).find((k) => k.toLowerCase() === name);
+          const brawlerType = key ? brawlerTypes[key] : null;
 
           return (
-            <div
-              key={map}
-              onClick={() => setSelectedMap(map)}
-              className={`min-w-[160px] cursor-pointer rounded overflow-hidden border shadow-lg hover:shadow-xl ${
-                selectedMap === map ? "border-blue-500" : "border-gray-300"
-              }`}
-            >
-              <div
-                className={`${colorClass} text-white py-2 px-2 text-sm font-semibold flex items-center gap-2`}
-              >
-                <img
-                  src={`/icons/${mode}.png`}
-                  alt={readableMode}
-                  className="w-5 h-5 object-contain"
-                />
-                <div className="flex flex-col leading-tight">
-                  <span>{readableMode}</span>
-                  <span className="text-xs font-normal">{mapName}</span>
-                </div>
-              </div>
-              <img
-                src={`/maps/${mapId}.png`}
-                alt={map}
-                className="w-full object-contain"
-                style={{ height: "auto", maxHeight: "250px" }}
-              />
-            </div>
+            <BrawlerCard
+              key={index}
+              brawler={brawler}
+              type={brawlerType}
+              width={cardWidth}
+              height={cardHeight}
+              typeIconSize={iconSize}
+            />
           );
         })}
       </div>
 
-      {/* AFFICHAGE DES BRAWLERS */}
+      {/* Filter + Sort */}
+      <SortAndFilterControls
+  sortMode={sortMode}
+  setSortMode={setSortMode}
+  filterType={filterType}
+  setFilterType={setFilterType}
+  allTypes={allTypes}
+/>
+
+      {/* Remaining Brawlers */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center">
-        {filteredBrawlers.map((brawler, index) => {
+        {availableBrawlers.map((brawler, index) => {
           const name = brawler.Brawler.trim().toLowerCase();
-          const key = Object.keys(brawlerTypes).find(k => k.toLowerCase() === name);
+          const key = Object.keys(brawlerTypes).find((k) => k.toLowerCase() === name);
           const brawlerType = key ? brawlerTypes[key] : null;
 
           return (

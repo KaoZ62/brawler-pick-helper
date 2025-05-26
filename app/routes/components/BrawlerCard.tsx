@@ -36,7 +36,7 @@ export default function BrawlerCard({
         alignItems: "center"
       }}
     >
-      <div className="relative w-18 h-18 bg-transparent rounded overflow-hidden">
+      <div className="relative w-16 h-16 bg-transparent rounded overflow-hidden">
   <img
     src={`/brawlers/${imgId}.png`}
     alt={brawler.Brawler}
